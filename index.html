@@ -3,6 +3,718 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0b1f3a">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="IqraBill">
+<title>اقراء یونیفارم سینٹر</title>
+<style>
+:root {
+  --navy: #0b1f3a;
+  --gold: #c9973a;
+  --gold-light: #e8b95a;
+  --cream: #faf8f4;
+  --white: #ffffff;
+  --surface: #f4f6fb;
+  --border: #dde3ef;
+  --text: #1a2636;
+  --muted: #6b7a93;
+  --boys: #1f4fb3;
+  --boys-soft: #eef3ff;
+  --girls: #b3195c;
+  --girls-soft: #fff0f6;
+  --shadow-md: 0 4px 16px rgba(11,31,58,0.10);
+  --shadow-lg: 0 12px 40px rgba(11,31,58,0.14);
+  --radius: 12px;
+  --radius-sm: 8px;
+  --urdu: 'Jameel Noori Nastaleeq','Noto Nastaliq Urdu','Nafees Web Naskh',serif;
+  --nums: Arial, sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:var(--urdu);direction:rtl;background:var(--cream);min-height:100vh;color:var(--text);}
+
+/* HEADER */
+.header{background:linear-gradient(135deg,#0b1f3a 0%,#1a3a6a 60%,#0f2a4d 100%);padding:22px 32px;display:flex;align-items:center;justify-content:space-between;}
+.header-brand h1{font-family:var(--urdu);font-size:28px;color:#fff;line-height:1.4;}
+.header-brand p{font-family:var(--urdu);font-size:13px;color:var(--gold-light);margin-top:2px;}
+.header-badge{background:rgba(201,151,58,0.2);border:1px solid rgba(201,151,58,0.4);color:var(--gold-light);font-family:var(--urdu);font-size:13px;padding:6px 16px;border-radius:20px;white-space:nowrap;}
+
+/* MAIN */
+.main{max-width:1180px;margin:0 auto;padding:24px 16px 60px;}
+
+/* CARD */
+.card{background:var(--white);border-radius:var(--radius);box-shadow:var(--shadow-md);border:1px solid var(--border);padding:20px 20px;margin-bottom:18px;overflow:hidden;}
+.card-header{display:flex;align-items:center;gap:10px;margin-bottom:14px;flex-direction:row-reverse;justify-content:flex-end;}
+.card-icon{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:15px;background:var(--navy);color:var(--gold-light);}
+.card-title{font-family:var(--urdu);font-size:16px;font-weight:600;color:var(--muted);}
+.field-row{display:grid;grid-template-columns:2fr 1fr 1fr;gap:12px;overflow:hidden;}
+.field{display:flex;flex-direction:column;gap:5px;}
+.field label{font-family:var(--urdu);font-size:13px;font-weight:600;color:var(--muted);text-align:right;}
+.field input,.field select{padding:10px 12px;border:1.5px solid var(--border);border-radius:var(--radius-sm);font-size:14px;font-family:var(--urdu);color:var(--text);background:var(--surface);outline:none;width:100%;min-width:0;max-width:100%;text-align:right;}
+.field input:focus,.field select:focus{border-color:var(--boys);background:var(--white);}
+.balance-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px;}
+
+/* SECTION */
+.section-header{display:flex;align-items:center;gap:12px;margin:22px 0 10px;flex-direction:row-reverse;}
+.section-pill{padding:6px 18px;border-radius:20px;font-family:var(--urdu);font-size:14px;font-weight:700;white-space:nowrap;}
+.section-pill.boys{background:var(--boys);color:#fff;}
+.section-pill.girls{background:var(--girls);color:#fff;}
+.section-line{flex:1;height:1px;background:var(--border);}
+.section-count{font-family:var(--nums);font-size:12px;color:var(--muted);white-space:nowrap;direction:ltr;}
+
+/* SIZE GRID */
+.size-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(86px,1fr));gap:9px;}
+.size-card{background:var(--white);border:1.5px solid var(--border);border-radius:var(--radius);padding:11px 7px 9px;text-align:center;position:relative;overflow:hidden;transition:border-color 0.2s,box-shadow 0.2s;}
+.size-card.boys-card.active{border-color:var(--boys);background:var(--boys-soft);}
+.size-card.girls-card.active{border-color:var(--girls);background:var(--girls-soft);}
+.size-label{font-family:var(--nums);font-size:18px;font-weight:700;color:var(--text);line-height:1;margin-bottom:2px;direction:ltr;}
+.size-tag{font-family:var(--urdu);font-size:11px;font-weight:700;margin-bottom:4px;}
+.size-tag.boys{color:var(--boys);}
+.size-tag.girls{color:var(--girls);}
+.size-rate{font-family:var(--nums);font-size:10px;color:var(--muted);margin-bottom:7px;direction:ltr;}
+.size-card input{width:100%;text-align:center;padding:7px 4px;border:1.5px solid var(--border);border-radius:7px;font-family:var(--nums);font-size:15px;font-weight:600;color:var(--text);background:var(--surface);outline:none;direction:ltr;}
+.size-card.boys-card input:focus{border-color:var(--boys);}
+.size-card.girls-card input:focus{border-color:var(--girls);}
+.qty-badge{position:absolute;top:5px;left:5px;background:var(--boys);color:#fff;font-family:var(--nums);font-size:9px;font-weight:700;width:17px;height:17px;border-radius:50%;display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity 0.2s;}
+.size-card.girls-card .qty-badge{background:var(--girls);}
+.size-card.active .qty-badge{opacity:1;}
+
+/* SUMMARY */
+.summary-bar{background:var(--white);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;margin-top:18px;}
+.summary-inner{display:grid;grid-template-columns:repeat(4,1fr);}
+.summary-cell{padding:16px 12px;border-left:1px solid var(--border);text-align:center;}
+.summary-cell:last-child{border-left:none;}
+.s-label{font-family:var(--urdu);font-size:12px;color:var(--muted);margin-bottom:4px;}
+.s-value{font-family:var(--nums);font-size:20px;font-weight:700;color:var(--text);direction:ltr;display:block;}
+.total-cell{background:var(--navy);}
+.total-cell .s-label{color:rgba(255,255,255,0.6);}
+.total-cell .s-value{color:var(--gold-light);font-size:16px;}
+
+/* BALANCE BAR */
+.balance-bar{display:grid;grid-template-columns:repeat(3,1fr);margin-top:10px;border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;}
+.bal-cell{padding:14px 10px;text-align:center;}
+.bal-cell.prev{background:#fff8ee;}
+.bal-cell.recv{background:#edfaf4;}
+.bal-cell.remain{background:#0b1f3a;}
+.bal-lbl{font-family:var(--urdu);font-size:12px;margin-bottom:3px;}
+.bal-cell.prev .bal-lbl{color:#b8852e;}
+.bal-cell.recv .bal-lbl{color:#1a7a4c;}
+.bal-cell.remain .bal-lbl{color:rgba(255,255,255,0.7);}
+.bal-val{font-family:var(--nums);font-size:17px;font-weight:700;direction:ltr;display:block;}
+.bal-cell.prev .bal-val{color:#b8852e;}
+.bal-cell.recv .bal-val{color:#1a7a4c;}
+.bal-cell.remain .bal-val{color:#e8b95a;}
+
+/* BUTTONS */
+.actions{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-top:14px;}
+.btn{padding:12px 10px;border:none;border-radius:var(--radius-sm);font-family:var(--urdu);font-size:14px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;transition:all 0.18s;}
+.btn-primary{background:linear-gradient(135deg,#1f4fb3,#2d6cdf);color:#fff;}
+.btn-gold{background:linear-gradient(135deg,#b8852e,#d4a045);color:#fff;}
+.btn-ghost{background:var(--surface);color:var(--muted);border:1.5px solid var(--border);}
+#hideBtn{display:none;margin-top:8px;width:100%;}
+
+/* TOAST */
+.toast{position:fixed;bottom:24px;left:20px;background:var(--navy);color:#fff;padding:11px 18px;border-radius:var(--radius-sm);font-family:var(--urdu);font-size:14px;box-shadow:var(--shadow-lg);transform:translateY(80px);opacity:0;transition:all 0.3s;z-index:999;border-right:3px solid var(--gold);}
+.toast.show{transform:translateY(0);opacity:1;}
+
+/* PDF OVERLAY */
+.pdf-overlay{position:fixed;inset:0;background:rgba(11,31,58,0.85);display:none;flex-direction:column;align-items:center;justify-content:center;z-index:9999;}
+.pdf-overlay.show{display:flex;}
+.pdf-spinner{width:50px;height:50px;border:4px solid rgba(255,255,255,0.2);border-top-color:#e8b95a;border-radius:50%;animation:spin 0.8s linear infinite;margin-bottom:16px;}
+@keyframes spin{to{transform:rotate(360deg);}}
+.pdf-overlay p{font-family:var(--urdu);color:#fff;font-size:17px;}
+
+/* INVOICE */
+#invoice{display:none;margin-top:20px;}
+
+/* INVOICE STYLES */
+.inv-wrap{font-family:var(--urdu);background:#fff;border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow-lg);direction:rtl;}
+.inv-head{background:linear-gradient(135deg,#0b1f3a,#1a3a6a);padding:22px 28px;display:flex;align-items:center;justify-content:space-between;-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+.inv-head-left h1{font-family:var(--urdu);font-size:30px;color:#fff;line-height:1.5;}
+.inv-head-left p{font-family:var(--nums);font-size:13px;color:#e8b95a;font-weight:bold;text-align:center;margin-top:4px;}
+.inv-head-right{text-align:left;}
+.inv-head-right .inv-no{font-family:var(--nums);font-size:12px;color:#fff;direction:ltr;}
+.inv-head-right .inv-date{font-family:var(--nums);color:#e8b95a;font-size:14px;font-weight:600;margin-top:3px;direction:ltr;}
+.inv-meta{display:flex;flex-direction:row-reverse;justify-content:space-between;padding:14px 24px;background:#f8faff;border-bottom:1px solid var(--border);}
+.inv-meta-block .lbl{font-family:var(--urdu);font-size:13px;color:var(--muted);}
+.inv-meta-block .val{font-family:var(--urdu);font-size:17px;font-weight:600;color:var(--text);margin-top:2px;}
+.inv-meta-block .val.num{font-family:var(--nums);direction:ltr;display:inline-block;}
+.inv-body{padding:20px 24px;}
+.inv-tables{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:18px;}
+.inv-table-wrap.boys{background:#f0f5ff;border:2px solid var(--boys);border-radius:9px;padding:10px;-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+.inv-table-wrap.girls{background:#fff0f6;border:2px solid var(--girls);border-radius:9px;padding:10px;-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+.inv-table-wrap h3{background:#0b1f3a;color:#fff;text-align:center;padding:9px 14px;border-radius:7px;margin-bottom:9px;font-size:16px;font-family:var(--urdu);font-weight:bold;display:block;-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+table.inv-table{width:100%;border-collapse:collapse;font-family:var(--nums);font-size:14px;direction:rtl;}
+table.inv-table th{padding:9px 8px;font-family:var(--urdu);font-size:13px;color:var(--muted);border-bottom:2px solid var(--border);text-align:center;}
+table.inv-table td{padding:8px;text-align:center;border-bottom:1px solid #f0f3f8;font-family:var(--nums);}
+table.inv-table tfoot td{border-top:2px solid var(--border);border-bottom:none;font-weight:700;padding-top:9px;}
+.inv-totals{background:var(--surface);border-radius:var(--radius-sm);padding:14px 16px;display:flex;flex-direction:row-reverse;justify-content:space-between;align-items:center;margin-bottom:14px;}
+.inv-qty-grid{display:flex;flex-direction:row-reverse;gap:20px;}
+.inv-qty-item .lbl{font-family:var(--urdu);font-size:12px;color:var(--muted);}
+.inv-qty-item .val{font-family:var(--nums);font-size:18px;font-weight:700;margin-top:2px;direction:ltr;display:block;text-align:center;}
+.inv-qty-item.boys .val{color:var(--boys);}
+.inv-qty-item.girls .val{color:var(--girls);}
+.inv-boxes{display:flex;flex-direction:column;gap:7px;min-width:190px;}
+.inv-grand{background:#0b1f3a;border-radius:7px;padding:10px 20px;text-align:center;-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+.inv-grand .lbl{font-family:var(--urdu);font-size:13px;color:#fff;margin-bottom:2px;}
+.inv-grand .val{font-family:var(--nums);font-size:22px;color:#e8b95a;direction:ltr;display:block;}
+.inv-prev{background:#b8852e;border-radius:7px;padding:9px 20px;text-align:center;-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+.inv-prev .lbl{font-family:var(--urdu);font-size:12px;color:rgba(255,255,255,0.85);margin-bottom:2px;}
+.inv-prev .val{font-family:var(--nums);font-size:18px;color:#fff;direction:ltr;display:block;}
+.inv-recv{background:#1a7a4c;border-radius:7px;padding:9px 20px;text-align:center;-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+.inv-recv .lbl{font-family:var(--urdu);font-size:12px;color:rgba(255,255,255,0.85);margin-bottom:2px;}
+.inv-recv .val{font-family:var(--nums);font-size:18px;color:#fff;direction:ltr;display:block;}
+.inv-remain{background:#0b1f3a;border:2px solid #e8b95a;border-radius:7px;padding:10px 20px;text-align:center;-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+.inv-remain .lbl{font-family:var(--urdu);font-size:13px;color:#fff;font-weight:bold;margin-bottom:2px;}
+.inv-remain .val{font-family:var(--nums);font-size:24px;color:#e8b95a;direction:ltr;display:block;font-weight:bold;}
+.inv-foot{background:#0b1f3a;padding:13px 24px;text-align:center;-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+.inv-foot p{font-family:var(--urdu);font-size:16px;color:#fff;}
+.inv-foot span{color:#e8b95a;}
+
+@media print{
+  body *{visibility:hidden!important;}
+  #invoice,#invoice *{visibility:visible!important;}
+  #invoice{display:block!important;position:absolute!important;inset:0!important;margin:0!important;width:100%!important;}
+}
+@media(max-width:700px){
+  .field-row{grid-template-columns:1fr 1fr;}
+  .summary-inner{grid-template-columns:1fr 1fr;}
+  .actions{grid-template-columns:1fr 1fr;}
+  .inv-tables{grid-template-columns:1fr;}
+  .size-grid{grid-template-columns:repeat(auto-fill,minmax(76px,1fr));}
+  .header{padding:16px 18px;}
+  .header-brand h1{font-size:22px;}
+}
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="header-brand">
+    <h1>اقراء یونیفارم سینٹر</h1>
+    <p>پوائنٹ آف سیل سسٹم</p>
+  </div>
+  <div class="header-badge">ورژن ۲.۰</div>
+</header>
+
+<main class="main">
+
+  <div class="card">
+    <div class="card-header">
+      <div class="card-icon">👤</div>
+      <span class="card-title">آرڈر کی تفصیل</span>
+    </div>
+    <div class="field-row">
+      <div class="field">
+        <label>بنام</label>
+        <select id="customer" onchange="onCustomerChange()" style="padding:10px 12px;border:1.5px solid var(--border);border-radius:var(--radius-sm);font-size:15px;font-family:'Jameel Noori Nastaleeq','Noto Nastaliq Urdu',serif;color:var(--text);background:var(--surface);outline:none;width:100%;min-width:0;cursor:pointer;direction:rtl;text-align:right;">
+          <option value="Qari Idrees Sahib">قاری ادریس صاحب</option>
+          <option value="Qari Sadiq Sahib">قاری صادق صاحب</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>تاریخ</label>
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:4px;">
+          <select id="dd" style="padding:9px 3px;border:1.5px solid var(--border);border-radius:var(--radius-sm);font-family:Arial,sans-serif;font-size:13px;color:var(--text);background:var(--surface);outline:none;width:100%;min-width:0;direction:ltr;"></select>
+          <select id="mm" style="padding:9px 3px;border:1.5px solid var(--border);border-radius:var(--radius-sm);font-family:Arial,sans-serif;font-size:13px;color:var(--text);background:var(--surface);outline:none;width:100%;min-width:0;direction:ltr;"></select>
+          <select id="yy" style="padding:9px 3px;border:1.5px solid var(--border);border-radius:var(--radius-sm);font-family:Arial,sans-serif;font-size:13px;color:var(--text);background:var(--surface);outline:none;width:100%;min-width:0;direction:ltr;"></select>
+        </div>
+      </div>
+      <div class="field">
+        <label>بل نمبر</label>
+        <input type="text" id="invoiceNo" placeholder="خودکار" style="font-family:Arial,sans-serif;direction:ltr;text-align:left;">
+      </div>
+    </div>
+    <div class="balance-row">
+      <div class="field">
+        <label>پچھلا بقایا (روپے)</label>
+        <input type="number" id="prevBalance" value="0" min="0" oninput="updateBalance()" style="font-family:Arial,sans-serif;direction:ltr;text-align:left;">
+      </div>
+      <div class="field">
+        <label>وصول شدہ رقم (روپے)</label>
+        <input type="number" id="received" value="0" min="0" oninput="updateBalance()" style="font-family:Arial,sans-serif;direction:ltr;text-align:left;">
+      </div>
+    </div>
+  </div>
+
+  <div class="section-header">
+    <span class="section-pill boys">لڑکوں کے سائز</span>
+    <div class="section-line"></div>
+    <span class="section-count" id="boys-count">0 pcs — Rs. 0</span>
+  </div>
+  <div id="boys" class="size-grid"></div>
+
+  <div class="section-header">
+    <span class="section-pill girls">لڑکیوں کے سائز</span>
+    <div class="section-line"></div>
+    <span class="section-count" id="girls-count">0 pcs — Rs. 0</span>
+  </div>
+  <div id="girls" class="size-grid"></div>
+
+  <div class="summary-bar">
+    <div class="summary-inner">
+      <div class="summary-cell">
+        <div class="s-label">لڑکوں کی تعداد</div>
+        <div class="s-value" id="tBoys">0</div>
+      </div>
+      <div class="summary-cell">
+        <div class="s-label">لڑکیوں کی تعداد</div>
+        <div class="s-value" id="tGirls">0</div>
+      </div>
+      <div class="summary-cell">
+        <div class="s-label">کل تعداد</div>
+        <div class="s-value" id="tQty">0</div>
+      </div>
+      <div class="summary-cell total-cell">
+        <div class="s-label">کل رقم</div>
+        <div class="s-value" id="total">Rs. 0</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="balance-bar">
+    <div class="bal-cell prev">
+      <div class="bal-lbl">پچھلا بقایا</div>
+      <div class="bal-val" id="dispPrev">0</div>
+    </div>
+    <div class="bal-cell recv">
+      <div class="bal-lbl">وصول شدہ</div>
+      <div class="bal-val" id="dispReceived">0</div>
+    </div>
+    <div class="bal-cell remain">
+      <div class="bal-lbl">باقی رقم</div>
+      <div class="bal-val" id="dispRemaining">0</div>
+    </div>
+  </div>
+
+  <div class="actions">
+    <button class="btn btn-primary" onclick="calculate()">🧮 حساب کریں</button>
+    <button class="btn btn-gold" onclick="generateInvoice()">🖨️ بل پرنٹ</button>
+    <button class="btn btn-ghost" onclick="resetAll()">🔄 دوبارہ شروع</button>
+  </div>
+  <button class="btn btn-ghost" id="hideBtn" onclick="hideInvoice()">✕ بل بند کریں</button>
+
+</main>
+
+<div class="pdf-overlay" id="pdfOverlay">
+  <div class="pdf-spinner"></div>
+  <p>بل تیار ہو رہا ہے...</p>
+</div>
+
+<div id="invoice"></div>
+<div class="toast" id="toast"></div>
+
+<script>
+var sizes = [20,22,24,26,28,30,32,34,36,38,40];
+
+var rates = {
+  'Qari Idrees Sahib': {
+    boys:  {20:775,22:800,24:825,26:850,28:875,30:900,32:925,34:975,36:1025,38:1125,40:1225},
+    girls: {20:925,22:950,24:975,26:1000,28:1025,30:1050,32:1075,34:1125,36:1175,38:1275,40:1375}
+  },
+  'Qari Sadiq Sahib': {
+    boys:  {20:800,22:850,24:900,26:950,28:1000,30:1050,32:1100,34:1150,36:1250,38:1450,40:1750},
+    girls: {20:1000,22:1050,24:1100,26:1150,28:1200,30:1250,32:1300,34:1350,36:1450,38:1650,40:1950}
+  }
+};
+
+var boysRate = {};
+var girlsRate = {};
+for(var k in rates['Qari Idrees Sahib'].boys) boysRate[k] = rates['Qari Idrees Sahib'].boys[k];
+for(var k in rates['Qari Idrees Sahib'].girls) girlsRate[k] = rates['Qari Idrees Sahib'].girls[k];
+
+// Date dropdowns
+(function(){
+  var now = new Date();
+  var ddEl = document.getElementById('dd');
+  var mmEl = document.getElementById('mm');
+  var yyEl = document.getElementById('yy');
+  for(var d=1;d<=31;d++){
+    var o=document.createElement('option');
+    o.value=String(d).padStart(2,'0');
+    o.textContent=String(d).padStart(2,'0');
+    if(d===now.getDate()) o.selected=true;
+    ddEl.appendChild(o);
+  }
+  var months=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  for(var i=0;i<months.length;i++){
+    var o=document.createElement('option');
+    o.value=String(i+1).padStart(2,'0');
+    o.textContent=months[i];
+    if(i===now.getMonth()) o.selected=true;
+    mmEl.appendChild(o);
+  }
+  for(var y=now.getFullYear();y>=2020;y--){
+    var o=document.createElement('option');
+    o.value=y; o.textContent=y;
+    if(y===now.getFullYear()) o.selected=true;
+    yyEl.appendChild(o);
+  }
+})();
+
+// Auto invoice number
+var invNum = 'IUC-' + (Math.floor(Math.random()*9000)+1000);
+document.getElem<!DOCTYPE html>
+<html lang="ur" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0b1f3a">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="IqraBill">
+<title>اقراء یونیفارم سینٹر</title>
+<style>
+:root {
+  --navy: #0b1f3a;
+  --gold: #c9973a;
+  --gold-light: #e8b95a;
+  --cream: #faf8f4;
+  --white: #ffffff;
+  --surface: #f4f6fb;
+  --border: #dde3ef;
+  --text: #1a2636;
+  --muted: #6b7a93;
+  --boys: #1f4fb3;
+  --boys-soft: #eef3ff;
+  --girls: #b3195c;
+  --girls-soft: #fff0f6;
+  --shadow-md: 0 4px 16px rgba(11,31,58,0.10);
+  --shadow-lg: 0 12px 40px rgba(11,31,58,0.14);
+  --radius: 12px;
+  --radius-sm: 8px;
+  --urdu: 'Jameel Noori Nastaleeq','Noto Nastaliq Urdu','Nafees Web Naskh',serif;
+  --nums: Arial, sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:var(--urdu);direction:rtl;background:var(--cream);min-height:100vh;color:var(--text);}
+
+/* HEADER */
+.header{background:linear-gradient(135deg,#0b1f3a 0%,#1a3a6a 60%,#0f2a4d 100%);padding:22px 32px;display:flex;align-items:center;justify-content:space-between;}
+.header-brand h1{font-family:var(--urdu);font-size:28px;color:#fff;line-height:1.4;}
+.header-brand p{font-family:var(--urdu);font-size:13px;color:var(--gold-light);margin-top:2px;}
+.header-badge{background:rgba(201,151,58,0.2);border:1px solid rgba(201,151,58,0.4);color:var(--gold-light);font-family:var(--urdu);font-size:13px;padding:6px 16px;border-radius:20px;white-space:nowrap;}
+
+/* MAIN */
+.main{max-width:1180px;margin:0 auto;padding:24px 16px 60px;}
+
+/* CARD */
+.card{background:var(--white);border-radius:var(--radius);box-shadow:var(--shadow-md);border:1px solid var(--border);padding:20px 20px;margin-bottom:18px;overflow:hidden;}
+.card-header{display:flex;align-items:center;gap:10px;margin-bottom:14px;flex-direction:row-reverse;justify-content:flex-end;}
+.card-icon{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:15px;background:var(--navy);color:var(--gold-light);}
+.card-title{font-family:var(--urdu);font-size:16px;font-weight:600;color:var(--muted);}
+.field-row{display:grid;grid-template-columns:2fr 1fr 1fr;gap:12px;overflow:hidden;}
+.field{display:flex;flex-direction:column;gap:5px;}
+.field label{font-family:var(--urdu);font-size:13px;font-weight:600;color:var(--muted);text-align:right;}
+.field input,.field select{padding:10px 12px;border:1.5px solid var(--border);border-radius:var(--radius-sm);font-size:14px;font-family:var(--urdu);color:var(--text);background:var(--surface);outline:none;width:100%;min-width:0;max-width:100%;text-align:right;}
+.field input:focus,.field select:focus{border-color:var(--boys);background:var(--white);}
+.balance-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px;}
+
+/* SECTION */
+.section-header{display:flex;align-items:center;gap:12px;margin:22px 0 10px;flex-direction:row-reverse;}
+.section-pill{padding:6px 18px;border-radius:20px;font-family:var(--urdu);font-size:14px;font-weight:700;white-space:nowrap;}
+.section-pill.boys{background:var(--boys);color:#fff;}
+.section-pill.girls{background:var(--girls);color:#fff;}
+.section-line{flex:1;height:1px;background:var(--border);}
+.section-count{font-family:var(--nums);font-size:12px;color:var(--muted);white-space:nowrap;direction:ltr;}
+
+/* SIZE GRID */
+.size-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(86px,1fr));gap:9px;}
+.size-card{background:var(--white);border:1.5px solid var(--border);border-radius:var(--radius);padding:11px 7px 9px;text-align:center;position:relative;overflow:hidden;transition:border-color 0.2s,box-shadow 0.2s;}
+.size-card.boys-card.active{border-color:var(--boys);background:var(--boys-soft);}
+.size-card.girls-card.active{border-color:var(--girls);background:var(--girls-soft);}
+.size-label{font-family:var(--nums);font-size:18px;font-weight:700;color:var(--text);line-height:1;margin-bottom:2px;direction:ltr;}
+.size-tag{font-family:var(--urdu);font-size:11px;font-weight:700;margin-bottom:4px;}
+.size-tag.boys{color:var(--boys);}
+.size-tag.girls{color:var(--girls);}
+.size-rate{font-family:var(--nums);font-size:10px;color:var(--muted);margin-bottom:7px;direction:ltr;}
+.size-card input{width:100%;text-align:center;padding:7px 4px;border:1.5px solid var(--border);border-radius:7px;font-family:var(--nums);font-size:15px;font-weight:600;color:var(--text);background:var(--surface);outline:none;direction:ltr;}
+.size-card.boys-card input:focus{border-color:var(--boys);}
+.size-card.girls-card input:focus{border-color:var(--girls);}
+.qty-badge{position:absolute;top:5px;left:5px;background:var(--boys);color:#fff;font-family:var(--nums);font-size:9px;font-weight:700;width:17px;height:17px;border-radius:50%;display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity 0.2s;}
+.size-card.girls-card .qty-badge{background:var(--girls);}
+.size-card.active .qty-badge{opacity:1;}
+
+/* SUMMARY */
+.summary-bar{background:var(--white);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;margin-top:18px;}
+.summary-inner{display:grid;grid-template-columns:repeat(4,1fr);}
+.summary-cell{padding:16px 12px;border-left:1px solid var(--border);text-align:center;}
+.summary-cell:last-child{border-left:none;}
+.s-label{font-family:var(--urdu);font-size:12px;color:var(--muted);margin-bottom:4px;}
+.s-value{font-family:var(--nums);font-size:20px;font-weight:700;color:var(--text);direction:ltr;display:block;}
+.total-cell{background:var(--navy);}
+.total-cell .s-label{color:rgba(255,255,255,0.6);}
+.total-cell .s-value{color:var(--gold-light);font-size:16px;}
+
+/* BALANCE BAR */
+.balance-bar{display:grid;grid-template-columns:repeat(3,1fr);margin-top:10px;border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;}
+.bal-cell{padding:14px 10px;text-align:center;}
+.bal-cell.prev{background:#fff8ee;}
+.bal-cell.recv{background:#edfaf4;}
+.bal-cell.remain{background:#0b1f3a;}
+.bal-lbl{font-family:var(--urdu);font-size:12px;margin-bottom:3px;}
+.bal-cell.prev .bal-lbl{color:#b8852e;}
+.bal-cell.recv .bal-lbl{color:#1a7a4c;}
+.bal-cell.remain .bal-lbl{color:rgba(255,255,255,0.7);}
+.bal-val{font-family:var(--nums);font-size:17px;font-weight:700;direction:ltr;display:block;}
+.bal-cell.prev .bal-val{color:#b8852e;}
+.bal-cell.recv .bal-val{color:#1a7a4c;}
+.bal-cell.remain .bal-val{color:#e8b95a;}
+
+/* BUTTONS */
+.actions{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-top:14px;}
+.btn{padding:12px 10px;border:none;border-radius:var(--radius-sm);font-family:var(--urdu);font-size:14px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;transition:all 0.18s;}
+.btn-primary{background:linear-gradient(135deg,#1f4fb3,#2d6cdf);color:#fff;}
+.btn-gold{background:linear-gradient(135deg,#b8852e,#d4a045);color:#fff;}
+.btn-ghost{background:var(--surface);color:var(--muted);border:1.5px solid var(--border);}
+#hideBtn{display:none;margin-top:8px;width:100%;}
+
+/* TOAST */
+.toast{position:fixed;bottom:24px;left:20px;background:var(--navy);color:#fff;padding:11px 18px;border-radius:var(--radius-sm);font-family:var(--urdu);font-size:14px;box-shadow:var(--shadow-lg);transform:translateY(80px);opacity:0;transition:all 0.3s;z-index:999;border-right:3px solid var(--gold);}
+.toast.show{transform:translateY(0);opacity:1;}
+
+/* PDF OVERLAY */
+.pdf-overlay{position:fixed;inset:0;background:rgba(11,31,58,0.85);display:none;flex-direction:column;align-items:center;justify-content:center;z-index:9999;}
+.pdf-overlay.show{display:flex;}
+.pdf-spinner{width:50px;height:50px;border:4px solid rgba(255,255,255,0.2);border-top-color:#e8b95a;border-radius:50%;animation:spin 0.8s linear infinite;margin-bottom:16px;}
+@keyframes spin{to{transform:rotate(360deg);}}
+.pdf-overlay p{font-family:var(--urdu);color:#fff;font-size:17px;}
+
+/* INVOICE */
+#invoice{display:none;margin-top:20px;}
+
+/* INVOICE STYLES */
+.inv-wrap{font-family:var(--urdu);background:#fff;border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow-lg);direction:rtl;}
+.inv-head{background:linear-gradient(135deg,#0b1f3a,#1a3a6a);padding:22px 28px;display:flex;align-items:center;justify-content:space-between;-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+.inv-head-left h1{font-family:var(--urdu);font-size:30px;color:#fff;line-height:1.5;}
+.inv-head-left p{font-family:var(--nums);font-size:13px;color:#e8b95a;font-weight:bold;text-align:center;margin-top:4px;}
+.inv-head-right{text-align:left;}
+.inv-head-right .inv-no{font-family:var(--nums);font-size:12px;color:#fff;direction:ltr;}
+.inv-head-right .inv-date{font-family:var(--nums);color:#e8b95a;font-size:14px;font-weight:600;margin-top:3px;direction:ltr;}
+.inv-meta{display:flex;flex-direction:row-reverse;justify-content:space-between;padding:14px 24px;background:#f8faff;border-bottom:1px solid var(--border);}
+.inv-meta-block .lbl{font-family:var(--urdu);font-size:13px;color:var(--muted);}
+.inv-meta-block .val{font-family:var(--urdu);font-size:17px;font-weight:600;color:var(--text);margin-top:2px;}
+.inv-meta-block .val.num{font-family:var(--nums);direction:ltr;display:inline-block;}
+.inv-body{padding:20px 24px;}
+.inv-tables{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:18px;}
+.inv-table-wrap.boys{background:#f0f5ff;border:2px solid var(--boys);border-radius:9px;padding:10px;-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+.inv-table-wrap.girls{background:#fff0f6;border:2px solid var(--girls);border-radius:9px;padding:10px;-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+.inv-table-wrap h3{background:#0b1f3a;color:#fff;text-align:center;padding:9px 14px;border-radius:7px;margin-bottom:9px;font-size:16px;font-family:var(--urdu);font-weight:bold;display:block;-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+table.inv-table{width:100%;border-collapse:collapse;font-family:var(--nums);font-size:14px;direction:rtl;}
+table.inv-table th{padding:9px 8px;font-family:var(--urdu);font-size:13px;color:var(--muted);border-bottom:2px solid var(--border);text-align:center;}
+table.inv-table td{padding:8px;text-align:center;border-bottom:1px solid #f0f3f8;font-family:var(--nums);}
+table.inv-table tfoot td{border-top:2px solid var(--border);border-bottom:none;font-weight:700;padding-top:9px;}
+.inv-totals{background:var(--surface);border-radius:var(--radius-sm);padding:14px 16px;display:flex;flex-direction:row-reverse;justify-content:space-between;align-items:center;margin-bottom:14px;}
+.inv-qty-grid{display:flex;flex-direction:row-reverse;gap:20px;}
+.inv-qty-item .lbl{font-family:var(--urdu);font-size:12px;color:var(--muted);}
+.inv-qty-item .val{font-family:var(--nums);font-size:18px;font-weight:700;margin-top:2px;direction:ltr;display:block;text-align:center;}
+.inv-qty-item.boys .val{color:var(--boys);}
+.inv-qty-item.girls .val{color:var(--girls);}
+.inv-boxes{display:flex;flex-direction:column;gap:7px;min-width:190px;}
+.inv-grand{background:#0b1f3a;border-radius:7px;padding:10px 20px;text-align:center;-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+.inv-grand .lbl{font-family:var(--urdu);font-size:13px;color:#fff;margin-bottom:2px;}
+.inv-grand .val{font-family:var(--nums);font-size:22px;color:#e8b95a;direction:ltr;display:block;}
+.inv-prev{background:#b8852e;border-radius:7px;padding:9px 20px;text-align:center;-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+.inv-prev .lbl{font-family:var(--urdu);font-size:12px;color:rgba(255,255,255,0.85);margin-bottom:2px;}
+.inv-prev .val{font-family:var(--nums);font-size:18px;color:#fff;direction:ltr;display:block;}
+.inv-recv{background:#1a7a4c;border-radius:7px;padding:9px 20px;text-align:center;-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+.inv-recv .lbl{font-family:var(--urdu);font-size:12px;color:rgba(255,255,255,0.85);margin-bottom:2px;}
+.inv-recv .val{font-family:var(--nums);font-size:18px;color:#fff;direction:ltr;display:block;}
+.inv-remain{background:#0b1f3a;border:2px solid #e8b95a;border-radius:7px;padding:10px 20px;text-align:center;-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+.inv-remain .lbl{font-family:var(--urdu);font-size:13px;color:#fff;font-weight:bold;margin-bottom:2px;}
+.inv-remain .val{font-family:var(--nums);font-size:24px;color:#e8b95a;direction:ltr;display:block;font-weight:bold;}
+.inv-foot{background:#0b1f3a;padding:13px 24px;text-align:center;-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+.inv-foot p{font-family:var(--urdu);font-size:16px;color:#fff;}
+.inv-foot span{color:#e8b95a;}
+
+@media print{
+  body *{visibility:hidden!important;}
+  #invoice,#invoice *{visibility:visible!important;}
+  #invoice{display:block!important;position:absolute!important;inset:0!important;margin:0!important;width:100%!important;}
+}
+@media(max-width:700px){
+  .field-row{grid-template-columns:1fr 1fr;}
+  .summary-inner{grid-template-columns:1fr 1fr;}
+  .actions{grid-template-columns:1fr 1fr;}
+  .inv-tables{grid-template-columns:1fr;}
+  .size-grid{grid-template-columns:repeat(auto-fill,minmax(76px,1fr));}
+  .header{padding:16px 18px;}
+  .header-brand h1{font-size:22px;}
+}
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="header-brand">
+    <h1>اقراء یونیفارم سینٹر</h1>
+    <p>پوائنٹ آف سیل سسٹم</p>
+  </div>
+  <div class="header-badge">ورژن ۲.۰</div>
+</header>
+
+<main class="main">
+
+  <div class="card">
+    <div class="card-header">
+      <div class="card-icon">👤</div>
+      <span class="card-title">آرڈر کی تفصیل</span>
+    </div>
+    <div class="field-row">
+      <div class="field">
+        <label>بنام</label>
+        <select id="customer" onchange="onCustomerChange()" style="padding:10px 12px;border:1.5px solid var(--border);border-radius:var(--radius-sm);font-size:15px;font-family:'Jameel Noori Nastaleeq','Noto Nastaliq Urdu',serif;color:var(--text);background:var(--surface);outline:none;width:100%;min-width:0;cursor:pointer;direction:rtl;text-align:right;">
+          <option value="Qari Idrees Sahib">قاری ادریس صاحب</option>
+          <option value="Qari Sadiq Sahib">قاری صادق صاحب</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>تاریخ</label>
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:4px;">
+          <select id="dd" style="padding:9px 3px;border:1.5px solid var(--border);border-radius:var(--radius-sm);font-family:Arial,sans-serif;font-size:13px;color:var(--text);background:var(--surface);outline:none;width:100%;min-width:0;direction:ltr;"></select>
+          <select id="mm" style="padding:9px 3px;border:1.5px solid var(--border);border-radius:var(--radius-sm);font-family:Arial,sans-serif;font-size:13px;color:var(--text);background:var(--surface);outline:none;width:100%;min-width:0;direction:ltr;"></select>
+          <select id="yy" style="padding:9px 3px;border:1.5px solid var(--border);border-radius:var(--radius-sm);font-family:Arial,sans-serif;font-size:13px;color:var(--text);background:var(--surface);outline:none;width:100%;min-width:0;direction:ltr;"></select>
+        </div>
+      </div>
+      <div class="field">
+        <label>بل نمبر</label>
+        <input type="text" id="invoiceNo" placeholder="خودکار" style="font-family:Arial,sans-serif;direction:ltr;text-align:left;">
+      </div>
+    </div>
+    <div class="balance-row">
+      <div class="field">
+        <label>پچھلا بقایا (روپے)</label>
+        <input type="number" id="prevBalance" value="0" min="0" oninput="updateBalance()" style="font-family:Arial,sans-serif;direction:ltr;text-align:left;">
+      </div>
+      <div class="field">
+        <label>وصول شدہ رقم (روپے)</label>
+        <input type="number" id="received" value="0" min="0" oninput="updateBalance()" style="font-family:Arial,sans-serif;direction:ltr;text-align:left;">
+      </div>
+    </div>
+  </div>
+
+  <div class="section-header">
+    <span class="section-pill boys">لڑکوں کے سائز</span>
+    <div class="section-line"></div>
+    <span class="section-count" id="boys-count">0 pcs — Rs. 0</span>
+  </div>
+  <div id="boys" class="size-grid"></div>
+
+  <div class="section-header">
+    <span class="section-pill girls">لڑکیوں کے سائز</span>
+    <div class="section-line"></div>
+    <span class="section-count" id="girls-count">0 pcs — Rs. 0</span>
+  </div>
+  <div id="girls" class="size-grid"></div>
+
+  <div class="summary-bar">
+    <div class="summary-inner">
+      <div class="summary-cell">
+        <div class="s-label">لڑکوں کی تعداد</div>
+        <div class="s-value" id="tBoys">0</div>
+      </div>
+      <div class="summary-cell">
+        <div class="s-label">لڑکیوں کی تعداد</div>
+        <div class="s-value" id="tGirls">0</div>
+      </div>
+      <div class="summary-cell">
+        <div class="s-label">کل تعداد</div>
+        <div class="s-value" id="tQty">0</div>
+      </div>
+      <div class="summary-cell total-cell">
+        <div class="s-label">کل رقم</div>
+        <div class="s-value" id="total">Rs. 0</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="balance-bar">
+    <div class="bal-cell prev">
+      <div class="bal-lbl">پچھلا بقایا</div>
+      <div class="bal-val" id="dispPrev">0</div>
+    </div>
+    <div class="bal-cell recv">
+      <div class="bal-lbl">وصول شدہ</div>
+      <div class="bal-val" id="dispReceived">0</div>
+    </div>
+    <div class="bal-cell remain">
+      <div class="bal-lbl">باقی رقم</div>
+      <div class="bal-val" id="dispRemaining">0</div>
+    </div>
+  </div>
+
+  <div class="actions">
+    <button class="btn btn-primary" onclick="calculate()">🧮 حساب کریں</button>
+    <button class="btn btn-gold" onclick="generateInvoice()">🖨️ بل پرنٹ</button>
+    <button class="btn btn-ghost" onclick="resetAll()">🔄 دوبارہ شروع</button>
+  </div>
+  <button class="btn btn-ghost" id="hideBtn" onclick="hideInvoice()">✕ بل بند کریں</button>
+
+</main>
+
+<div class="pdf-overlay" id="pdfOverlay">
+  <div class="pdf-spinner"></div>
+  <p>بل تیار ہو رہا ہے...</p>
+</div>
+
+<div id="invoice"></div>
+<div class="toast" id="toast"></div>
+
+<script>
+var sizes = [20,22,24,26,28,30,32,34,36,38,40];
+
+var rates = {
+  'Qari Idrees Sahib': {
+    boys:  {20:775,22:800,24:825,26:850,28:875,30:900,32:925,34:975,36:1025,38:1125,40:1225},
+    girls: {20:925,22:950,24:975,26:1000,28:1025,30:1050,32:1075,34:1125,36:1175,38:1275,40:1375}
+  },
+  'Qari Sadiq Sahib': {
+    boys:  {20:800,22:850,24:900,26:950,28:1000,30:1050,32:1100,34:1150,36:1250,38:1450,40:1750},
+    girls: {20:1000,22:1050,24:1100,26:1150,28:1200,30:1250,32:1300,34:1350,36:1450,38:1650,40:1950}
+  }
+};
+
+var boysRate = {};
+var girlsRate = {};
+for(var k in rates['Qari Idrees Sahib'].boys) boysRate[k] = rates['Qari Idrees Sahib'].boys[k];
+for(var k in rates['Qari Idrees Sahib'].girls) girlsRate[k] = rates['Qari Idrees Sahib'].girls[k];
+
+// Date dropdowns
+(function(){
+  var now = new Date();
+  var ddEl = document.getElementById('dd');
+  var mmEl = document.getElementById('mm');
+  var yyEl = document.getElementById('yy');
+  for(var d=1;d<=31;d++){
+    var o=document.createElement('option');
+    o.value=String(d).padStart(2,'0');
+    o.textContent=String(d).padStart(2,'0');
+    if(d===now.getDate()) o.selected=true;
+    ddEl.appendChild(o);
+  }
+  var months=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  for(var i=0;i<months.length;i++){
+    var o=document.createElement('option');
+    o.value=String(i+1).padStart(2,'0');
+    o.textContent=months[i];
+    if(i===now.getMonth()) o.selected=true;
+    mmEl.appendChild(o);
+  }
+  for(var y=now.getFullYear();y>=2020;y--){
+    var o=document.createElement('option');
+    o.value=y; o.textContent=y;
+    if(y===now.getFullYear()) o.selected=true;
+    yyEl.appendChild(o);
+  }
+})();
+
+// Auto invoice number
+var invNum = 'IUC-' + (Math.floor(Math.random()*9000)+1000);
+document.getElem<!DOCTYPE html>
+<html lang="ur" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>اقراء یونیفارم سینٹر — پوائنٹ آف سیل</title>
 
 <!-- Jameel Noori Nastaleeq via Google Fonts CDN workaround -->
@@ -15,6 +727,10 @@
   font-style: normal;
 }
 </style>
+
+<!-- PDF Generation Libraries -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
 <style>
 :root {
@@ -332,6 +1048,27 @@ body {
 /* ── INVOICE ── */
 #invoice { display: none; margin-top: 24px; }
 
+/* ── PDF LOADING OVERLAY ── */
+.pdf-overlay {
+  position: fixed; inset: 0; background: rgba(11,31,58,0.85);
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  z-index: 9999; display: none;
+}
+.pdf-overlay.show { display: flex; }
+.pdf-spinner {
+  width: 52px; height: 52px;
+  border: 4px solid rgba(255,255,255,0.2);
+  border-top-color: #e8b95a;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  margin-bottom: 18px;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+.pdf-overlay p {
+  font-family: 'JameelNooriNastaleeq', serif;
+  color: #fff; font-size: 18px;
+}
+
 @media print {
   body * { visibility: hidden !important; }
   #invoice, #invoice * { visibility: visible !important; }
@@ -522,6 +1259,12 @@ table.inv-table tfoot td { border-top: 2px solid var(--border); border-bottom: n
   <button class="btn btn-ghost" id="hideBtn" onclick="hideInvoice()" style="margin-top:10px;">✕ بل بند کریں</button>
 
 </main>
+
+<!-- PDF Loading Overlay -->
+<div class="pdf-overlay" id="pdfOverlay">
+  <div class="pdf-spinner"></div>
+  <p>PDF بن رہی ہے...</p>
+</div>
 
 <div id="invoice"></div>
 <div class="toast" id="toast"></div>
@@ -812,17 +1555,63 @@ function generateInvoice() {
   inv.style.display = 'block';
   document.getElementById('hideBtn').style.display = 'block';
   inv.scrollIntoView({behavior:'smooth'});
-  setTimeout(()=>{ document.title='Invoice-'+invNo; window.print(); }, 300);
+
+  // Wait for render then generate PDF
+  setTimeout(() => exportPDF(invNo), 400);
 }
 
-window.addEventListener('afterprint', ()=>{ document.title='اقراء یونیفارم سینٹر'; });
-</script>
-<script>
-  if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('./sw.js')
-      .then(() => console.log('Service Worker Registered'))
-      .catch(err => console.log('SW registration failed'));
+async function exportPDF(invNo) {
+  const overlay = document.getElementById('pdfOverlay');
+  overlay.classList.add('show');
+
+  try {
+    const { jsPDF } = window.jspdf;
+    const element = document.getElementById('invoice');
+
+    const canvas = await html2canvas(element, {
+      scale: 2,
+      useCORS: true,
+      allowTaint: true,
+      backgroundColor: '#ffffff',
+      logging: false
+    });
+
+    const imgData = canvas.toDataURL('image/jpeg', 0.95);
+    const pdf = new jsPDF({
+      orientation: 'portrait',
+      unit: 'mm',
+      format: 'a4'
+    });
+
+    const pageW = pdf.internal.pageSize.getWidth();
+    const pageH = pdf.internal.pageSize.getHeight();
+    const imgW = pageW;
+    const imgH = (canvas.height * imgW) / canvas.width;
+
+    // If content taller than one page, split across pages
+    let heightLeft = imgH;
+    let position = 0;
+    pdf.addImage(imgData, 'JPEG', 0, position, imgW, imgH);
+    heightLeft -= pageH;
+
+    while (heightLeft > 0) {
+      position = heightLeft - imgH;
+      pdf.addPage();
+      pdf.addImage(imgData, 'JPEG', 0, position, imgW, imgH);
+      heightLeft -= pageH;
+    }
+
+    const fileName = 'Bill-' + invNo + '.pdf';
+    pdf.save(fileName);
+    showToast('✅ PDF محفوظ ہو گئی — ' + fileName);
+
+  } catch(err) {
+    console.error('PDF error:', err);
+    showToast('❌ PDF بنانے میں خرابی');
+  } finally {
+    overlay.classList.remove('show');
   }
-</script>  
+}
+</script>
 </body>
 </html>
