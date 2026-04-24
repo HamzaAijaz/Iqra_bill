@@ -1,0 +1,24 @@
+{
+  "background_color": "#ffffff",
+  "dir": "rtl",
+  "display": "standalone",
+  "name": "silver-tarsier-dc248b.netlify",
+  "orientation": "portrait",
+  "scope": "./",
+  "short_name": "silver-tarsier-dc248b.netlify",
+  "start_url": "./index.html",
+  "theme_color": "#ffffff",
+  "description": "IQRA Uniform",
+  "id": "7081",
+  "lang": "ur",
+  "display_override": [
+    "standalone",
+    "fullscreen",
+    "browser",
+    "minimal-ui",
+    "window-controls-overlay"
+  ],
+  "categories": [
+    "business"
+  ]
+}
